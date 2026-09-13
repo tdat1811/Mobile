@@ -8,7 +8,14 @@ async function bai30(): Promise<void> {
   ];
 
   const results = await Promise.allSettled(
-    urls.map((url) => fetch(url).then((res) => res.json()))
+    urls.map((url) =>
+      fetch(url).then((res) => {
+        if (!res.ok) {
+          throw new Error(`Lỗi HTTP ${res.status}: ${res.statusText}`);
+        }
+        return res.json();
+      })
+    )
   );
 
   results.forEach((result, index) => {
@@ -20,5 +27,5 @@ async function bai30(): Promise<void> {
   });
 }
 
-// ----- Chạy thử -----
+
 bai30();

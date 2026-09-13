@@ -9,7 +9,7 @@ function bai9(): Promise<number[]> {
   });
 }
 
-// ----- Chạy thử và in kết quả ra console -----
+
 bai9().then((result) => {
   console.log("Các số chẵn:", result);
 });

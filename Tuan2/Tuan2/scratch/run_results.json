@@ -1,0 +1,212 @@
+{
+  "1": {
+    "file": "src/practice/Bai1.ts",
+    "returncode": 0,
+    "stdout": "Hello Async\n",
+    "stderr": "",
+    "duration": 3.37
+  },
+  "2": {
+    "file": "src/practice/Bai2.ts",
+    "returncode": 0,
+    "stdout": "10\n",
+    "stderr": "",
+    "duration": 2.62
+  },
+  "3": {
+    "file": "src/practice/Bai3.ts",
+    "returncode": 0,
+    "stdout": "Lỗi: Something went wrong\n",
+    "stderr": "",
+    "duration": 2.61
+  },
+  "4": {
+    "file": "src/practice/Bai4.ts",
+    "returncode": 0,
+    "stdout": "Số ngẫu nhiên: 0.313807771837738\n",
+    "stderr": "",
+    "duration": 1.7
+  },
+  "5": {
+    "file": "src/practice/Bai5.ts",
+    "returncode": 0,
+    "stdout": "Task done\n",
+    "stderr": "",
+    "duration": 2.5
+  },
+  "6": {
+    "file": "src/practice/Bai6.ts",
+    "returncode": 0,
+    "stdout": "Kết quả Promise.all: [ 'Task done', 'Task done', 'Task done' ]\n",
+    "stderr": "",
+    "duration": 3.83
+  },
+  "7": {
+    "file": "src/practice/Bai7.ts",
+    "returncode": 0,
+    "stdout": "Kết quả Promise.race (nhanh nhất): Task done\n",
+    "stderr": "",
+    "duration": 4.99
+  },
+  "8": {
+    "file": "src/practice/Bai8.ts",
+    "returncode": 0,
+    "stdout": "Kết quả chuỗi Promise: 13\n",
+    "stderr": "",
+    "duration": 1.62
+  },
+  "9": {
+    "file": "src/practice/Bai9.ts",
+    "returncode": 0,
+    "stdout": "Các số chẵn: [ 2, 4, 6, 8, 10 ]\n",
+    "stderr": "",
+    "duration": 2.69
+  },
+  "10": {
+    "file": "src/practice/Bai10.ts",
+    "returncode": 0,
+    "stdout": "Thành công: Task succeeded\nDone\n",
+    "stderr": "",
+    "duration": 2.62
+  },
+  "11": {
+    "file": "src/practice/Bai11.ts",
+    "returncode": 0,
+    "stdout": "Hello Async\n",
+    "stderr": "",
+    "duration": 3.67
+  },
+  "12": {
+    "file": "src/practice/Bai12.ts",
+    "returncode": 0,
+    "stdout": "Task done\n",
+    "stderr": "",
+    "duration": 3.47
+  },
+  "13": {
+    "file": "src/practice/Bai13.ts",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "Bắt được lỗi: Something went wrong\n",
+    "duration": 2.44
+  },
+  "14": {
+    "file": "src/practice/Bai14.ts",
+    "returncode": 0,
+    "stdout": "Kết quả: 21\n",
+    "stderr": "",
+    "duration": 2.63
+  },
+  "15": {
+    "file": "src/practice/Bai15.ts",
+    "returncode": 0,
+    "stdout": "Bắt đầu tuần tự...\nKết quả 1: Task done\nKết quả 2: Task done\nKết quả 3: Task done\nHoàn tất tuần tự (mất khoảng 1500ms)\n",
+    "stderr": "",
+    "duration": 3.16
+  },
+  "16": {
+    "file": "src/practice/Bai16.ts",
+    "returncode": 0,
+    "stdout": "Bắt đầu song song...\nKết quả: Task done Task done Task done\nHoàn tất song song (chỉ mất khoảng 500ms)\n",
+    "stderr": "",
+    "duration": 2.09
+  },
+  "17": {
+    "file": "src/practice/Bai17.ts",
+    "returncode": 0,
+    "stdout": "Kết quả từng Promise: Task done\nKết quả từng Promise: Task done\nKết quả từng Promise: Task done\n",
+    "stderr": "",
+    "duration": 2.81
+  },
+  "18": {
+    "file": "src/practice/Bai18.ts",
+    "returncode": 0,
+    "stdout": "User: { id: 1, name: 'User 1' }\n",
+    "stderr": "",
+    "duration": 2.49
+  },
+  "19": {
+    "file": "src/practice/Bai19.ts",
+    "returncode": 0,
+    "stdout": "Danh sách users: [\n  { id: 1, name: 'User 1' },\n  { id: 2, name: 'User 2' },\n  { id: 3, name: 'User 3' }\n]\n",
+    "stderr": "",
+    "duration": 2.51
+  },
+  "20": {
+    "file": "src/practice/Bai20.ts",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "Lỗi: Timeout sau 2000ms\n",
+    "duration": 4.45
+  },
+  "21": {
+    "file": "src/practice/Bai21.ts",
+    "returncode": 0,
+    "stdout": "Dữ liệu todo: { userId: 1, id: 1, title: 'delectus aut autem', completed: false }\n",
+    "stderr": "",
+    "duration": 2.69
+  },
+  "22": {
+    "file": "src/practice/Bai22.ts",
+    "returncode": 0,
+    "stdout": "Todo #1: { userId: 1, id: 1, title: 'delectus aut autem', completed: false }\nTodo #2: {\n  userId: 1,\n  id: 2,\n  title: 'quis ut nam facilis et officia qui',\n  completed: false\n}\nTodo #3: { userId: 1, id: 3, title: 'fugiat veniam minus', completed: false }\n",
+    "stderr": "",
+    "duration": 2.54
+  },
+  "23": {
+    "file": "src/practice/Bai23.ts",
+    "returncode": 0,
+    "stdout": "Todos chưa hoàn thành: [\n  { userId: 1, id: 1, title: 'delectus aut autem', completed: false },\n  {\n    userId: 1,\n    id: 2,\n    title: 'quis ut nam facilis et officia qui',\n    completed: false\n  },\n  { userId: 1, id: 3, title: 'fugiat veniam minus', completed: false },\n  {\n    userId: 1,\n    id: 5,\n    title: 'laboriosam mollitia et enim quasi adipisci quia provident illum',\n    completed: false\n  },\n  {\n    userId: 1,\n    id: 6,\n    title: 'qui ullam ratione quibusdam voluptatem quia omnis',\n    completed: false\n  },\n  {\n    userId: 1,\n    id: 7,\n    title: 'illo expedita consequatur quia in',\n    completed: false\n  },\n  {\n    userId: 1,\n    id: 9,\n    title: 'molestiae perspiciatis ipsa',\n    completed: false\n  }\n]\n",
+    "stderr": "",
+    "duration": 2.17
+  },
+  "24": {
+    "file": "src/practice/Bai24.ts",
+    "returncode": 0,
+    "stdout": "Kết quả POST: { title: 'foo', body: 'bar', userId: 1, id: 101 }\n",
+    "stderr": "",
+    "duration": 2.64
+  },
+  "25": {
+    "file": "src/practice/Bai25.ts",
+    "returncode": 0,
+    "stdout": "Bắt đầu tải file \"bao_cao.pdf\"...\nĐã tải xong file \"bao_cao.pdf\"\n",
+    "stderr": "",
+    "duration": 4.46
+  },
+  "26": {
+    "file": "src/practice/Bai26.ts",
+    "returncode": 0,
+    "stdout": "Bắt đầu chờ 5 giây...\nĐã chờ xong 5 giây\n",
+    "stderr": "",
+    "duration": 6.78
+  },
+  "27": {
+    "file": "src/practice/Bai27.ts",
+    "returncode": 0,
+    "stdout": "Kết quả: { userId: 1, id: 1, title: 'delectus aut autem', completed: false }\n",
+    "stderr": "",
+    "duration": 2.67
+  },
+  "28": {
+    "file": "src/practice/Bai28.ts",
+    "returncode": 0,
+    "stdout": "Kết quả batch: [ 'Task done', 'Task done', 'Task done', 'Task done', 'Task done' ]\n",
+    "stderr": "",
+    "duration": 2.56
+  },
+  "29": {
+    "file": "src/practice/Bai29.ts",
+    "returncode": 0,
+    "stdout": "Đang xử lý task với thời gian 500ms...\nĐang xử lý task với thời gian 700ms...\nĐang xử lý task với thời gian 300ms...\nĐang xử lý task với thời gian 900ms...\nĐang xử lý task với thời gian 400ms...\nKết quả hàng đợi (tuần tự): [ 'Task done', 'Task done', 'Task done', 'Task done', 'Task done' ]\n",
+    "stderr": "",
+    "duration": 4.6
+  },
+  "30": {
+    "file": "src/practice/Bai30.ts",
+    "returncode": 0,
+    "stdout": "URL 1 thành công: { userId: 1, id: 1, title: 'delectus aut autem', completed: false }\nURL 2 thành công: {\n  userId: 1,\n  id: 2,\n  title: 'quis ut nam facilis et officia qui',\n  completed: false\n}\nURL 3 thất bại: Error: Lỗi HTTP 404: Not Found\n    at <anonymous> (D:\\mobile\\Tuan2\\Tuan2\\src\\practice\\Bai30.ts:14:17)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async Promise.allSettled (index 2)\n    at async bai30 (D:\\mobile\\Tuan2\\Tuan2\\src\\practice\\Bai30.ts:10:19)\n",
+    "stderr": "",
+    "duration": 2.3
+  }
+}

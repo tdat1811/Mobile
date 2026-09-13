@@ -2,7 +2,7 @@
 function bai1(): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve("Hello Wolrd");
+      resolve("Hello Async");
     }, 2000);
   });
 }

@@ -10,5 +10,5 @@ async function bai11(): Promise<void> {
   console.log(result);
 }
 
-// ----- Chạy thử -----
+
 bai11();

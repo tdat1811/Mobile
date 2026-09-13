@@ -1,0 +1,148 @@
+{
+  "11": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "11. Convert Exercise 1 into async/await.",
+    "vn_title": "Chuyển đổi Bài 1 sang cú pháp hiện đại async / await",
+    "purpose": "Làm quen với cú pháp async/await (ES2017), hiểu rõ cú pháp đường mật (syntactic sugar) giúp viết mã bất đồng bộ phẳng và tự nhiên như mã đồng bộ.",
+    "line_analysis": [
+      "Dòng 1-5: function delayHello(): Promise<string> - Định nghĩa hàm trả về Promise resolve sau 2000ms chuỗi 'Hello Async'.",
+      "Dòng 7: async function bai11(): Promise<void> - Từ khóa async đánh dấu hàm này là một hàm bất đồng bộ, luôn tự động trả về một Promise.",
+      "Dòng 8: const result = await delayHello(); - Từ khóa await tạm dừng việc thực thi cục bộ của hàm bai11 cho đến khi delayHello() giải quyết xong, sau đó gán giá trị resolve vào biến result.",
+      "Dòng 9: console.log(result); - In kết quả nhận được ra màn hình console."
+    ],
+    "execution_flow": "Khi bai11() chạy đến dòng có await, JavaScript Engine dừng hàm bai11 lại, lưu giữ trạng thái Execution Context và giải phóng Call Stack để tiếp tục xử lý các tác vụ khác. Sau 2 giây, khi Promise delayHello() resolve, hàm bai11 được đưa vào Microtask Queue và tiếp tục chạy từ dòng tiếp theo để in kết quả.",
+    "output_analysis": "Sau 2 giây, console in ra: 'Hello Async'. Kết quả hoàn toàn tương đương Bài 1 nhưng mã nguồn ngắn gọn, trực quan hơn.",
+    "mobile_application": "Chuẩn mực viết code trong toàn bộ các ứng dụng React Native hiện đại. Giúp các hàm gọi API, đọc dữ liệu local trở nên mạch lạc và dễ đọc hơn nhiều so với cú pháp .then()."
+  },
+  "12": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "12. Write an async function that calls simulateTask(2000) and logs the result.",
+    "vn_title": "Hàm async gọi hàm tiện ích simulateTask(2000) và in kết quả",
+    "purpose": "Sử dụng từ khóa await với hàm tiện ích có sẵn, nắm vững cơ chế Non-blocking của JavaScript Engine.",
+    "line_analysis": [
+      "Dòng 1: import { simulateTask } from \"./utils\"; - Nhập hàm simulateTask từ module utils.",
+      "Dòng 3: async function bai12(): Promise<void> - Định nghĩa hàm async bai12.",
+      "Dòng 4: const result = await simulateTask(2000); - Gọi simulateTask với thời gian 2000ms và sử dụng await để chờ kết quả.",
+      "Dòng 5: console.log(result); - Xuất chuỗi 'Task done' ra màn hình."
+    ],
+    "execution_flow": "Tác vụ chạy ngầm trong 2000ms. Luồng chính hoàn toàn tự do. Khi timer hoàn thành, await trả về chuỗi 'Task done' và tiếp tục thực thi dòng in ra màn hình.",
+    "output_analysis": "Sau 2 giây, màn hình hiển thị: 'Task done'. Thời gian thực thi đo được: 3.47 giây (bao gồm thời gian biên dịch tsx).",
+    "mobile_application": "Thực thi các tác vụ nền nặng (Background Processing) hoặc đồng bộ dữ liệu người dùng mà không gây đơ/khựng (jank/lag) giao diện 60fps của ứng dụng di động."
+  },
+  "13": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "13. Handle errors using try/catch with async/await.",
+    "vn_title": "Xử lý lỗi bất đồng bộ toàn diện với cấu trúc try / catch trong async/await",
+    "purpose": "Nắm vững kỹ thuật xử lý ngoại lệ trong async/await bằng khối try/catch truyền thống, thay thế cho phương thức .catch().",
+    "line_analysis": [
+      "Dòng 1-5: function failTask(): Promise<string> - Tạo hàm giả lập lỗi, reject sau 1000ms với Error(\"Something went wrong\").",
+      "Dòng 7: async function bai13(): Promise<void> - Định nghĩa hàm async.",
+      "Dòng 8-10: Khối try { const result = await failTask(); console.log(result); } - Đặt lời gọi hàm bất đồng bộ có nguy cơ phát sinh lỗi trong khối try.",
+      "Dòng 11-13: Khối catch (error) { console.error(\"Bắt được lỗi:\", (error as Error).message); } - Khi failTask() bị reject, await sẽ ném lỗi như một Exception thông thường, điều hướng luồng chạy thẳng vào khối catch. Ép kiểu (error as Error) giúp lấy thông điệp lỗi chuẩn xác."
+    ],
+    "execution_flow": "Sau 1 giây, failTask() bị reject. Khối try bị ngắt ngay tại dòng await, lệnh console.log(result) không được chạy. Luồng thực thi nhảy vào khối catch, in thông báo lỗi ra terminal và giữ tiến trình ổn định.",
+    "output_analysis": "Console in ra: 'Bắt được lỗi: Something went wrong'. Toàn bộ lỗi được bắt gọn gàng, không có cảnh báo unhandled exception.",
+    "mobile_application": "Cấu trúc chuẩn mực để bắt lỗi trong các hàm gọi API của React Native (như đăng nhập, nạp tiền, gửi tin nhắn). Khi có lỗi mạng, khối catch sẽ kích hoạt hiển thị Toast thông báo lỗi cho người dùng một cách thân thiện."
+  },
+  "14": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "14. Write an async function that takes a number, waits 1 second, and returns the number * 3.",
+    "vn_title": "Hàm async nhận số, chờ 1 giây và trả về tích số nhân 3",
+    "purpose": "Thực hiện tính toán bất đồng bộ có đối số truyền vào, trả về giá trị từ hàm async và nhận kết quả bên ngoài.",
+    "line_analysis": [
+      "Dòng 2: async function bai14(num: number): Promise<number> - Nhận đối số num kiểu number, khai báo trả về Promise<number>.",
+      "Dòng 3-7: return new Promise((resolve) => { setTimeout(() => { resolve(num * 3); }, 1000); }); - Tạo độ trễ 1000ms sau đó resolve kết quả num * 3.",
+      "Dòng 10-12: bai14(7).then((result) => { console.log(\"Kết quả:\", result); }); - Gọi hàm với giá trị đầu vào là 7, sau 1 giây nhận kết quả 21."
+    ],
+    "execution_flow": "Giá trị 7 được truyền vào, timer 1000ms kích hoạt. Sau 1 giây, phép nhân 7 * 3 = 21 được tính toán và resolve. Callback bên ngoài nhận được 21 và in ra terminal.",
+    "output_analysis": "Sau 1 giây, console in ra: 'Kết quả: 21'. Kết quả toán học hoàn toàn chính xác.",
+    "mobile_application": "Mô phỏng các hàm tính toán phức tạp trên Mobile cần sự hỗ trợ của server: Tính cước vận chuyển Grab/Shopee theo khoảng cách kilomet, áp dụng mã khuyến mãi chiết khấu trên tổng hóa đơn giỏ hàng."
+  },
+  "15": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "15. Call multiple async functions sequentially using await.",
+    "vn_title": "Thực thi tuần tự nhiều hàm async bằng từ khóa await",
+    "purpose": "Hiểu rõ cơ chế thực thi tuần tự (Sequential Execution) khi dùng await, phân tích ưu nhược điểm về mặt thời gian và trường hợp nên áp dụng.",
+    "line_analysis": [
+      "Dòng 5: console.log(\"Bắt đầu tuần tự...\");",
+      "Dòng 7: const result1 = await simulateTask(500); - Chạy tác vụ 1 trong 500ms, chờ hoàn tất.",
+      "Dòng 10: const result2 = await simulateTask(500); - Chỉ bắt đầu sau khi tác vụ 1 xong, chạy tiếp 500ms.",
+      "Dòng 13: const result3 = await simulateTask(500); - Chỉ bắt đầu sau khi tác vụ 2 xong, chạy tiếp 500ms.",
+      "Dòng 16: console.log(\"Hoàn tất tuần tự (mất khoảng 1500ms)\"); - Báo cáo hoàn tất."
+    ],
+    "execution_flow": "Các tác vụ chạy nối đuôi nhau (chế độ thác nước - Waterfall): Task 1 (0 -> 500ms) -> Task 2 (500 -> 1000ms) -> Task 3 (1000 -> 1500ms). Tổng thời gian thực thi bằng tổng các độ trễ: 500 + 500 + 500 = 1500ms.",
+    "output_analysis": "Console in ra từng kết quả theo thứ tự:\nBắt đầu tuần tự...\nKết quả 1: Task done\nKết quả 2: Task done\nKết quả 3: Task done\nHoàn tất tuần tự (mất khoảng 1500ms)",
+    "mobile_application": "Bắt buộc sử dụng khi các tác vụ có tính phụ thuộc dữ liệu (Data Dependency): (1) Đăng nhập để lấy Access Token -> (2) Dùng Access Token để lấy Profile User -> (3) Dùng User ID để lấy Danh sách đơn hàng cá nhân."
+  },
+  "16": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "16. Call multiple async functions in parallel using Promise.all().",
+    "vn_title": "Thực thi song song nhiều hàm async với Promise.all()",
+    "purpose": "So sánh trực quan giữa thực thi tuần tự (Bài 15) và thực thi song song (Bài 16), hiểu rõ cách tối ưu hiệu năng vượt trội với Promise.all().",
+    "line_analysis": [
+      "Dòng 5: console.log(\"Bắt đầu song song...\");",
+      "Dòng 7-11: const [result1, result2, result3] = await Promise.all([ simulateTask(500), simulateTask(500), simulateTask(500) ]); - Khởi chạy cả 3 tác vụ cùng một thời điểm và dùng await để chờ cả 3 hoàn thành đồng thời. Cú pháp destructuring mảng giúp gán kết quả vào 3 biến rõ ràng.",
+      "Dòng 13-14: console.log(\"Kết quả:\", result1, result2, result3); console.log(\"Hoàn tất song song (chỉ mất khoảng 500ms)\");"
+    ],
+    "execution_flow": "Cả 3 timer 500ms được kích hoạt đồng thời tại mốc 0ms. Sau đúng 500ms, cả 3 timer cùng hoàn tất. Promise.all giải quyết và trả về mảng kết quả. Thời gian thực thi giảm 3 lần (từ 1500ms xuống chỉ còn 500ms).",
+    "output_analysis": "Console in ra:\nBắt đầu song song...\nKết quả: Task done Task done Task done\nHoàn tất song song (chỉ mất khoảng 500ms)",
+    "mobile_application": "Tối ưu hóa thời gian tải ứng dụng di động: Tải song song danh sách sản phẩm gợi ý, danh mục danh bạ, và tỷ giá ngoại hối khi người dùng mở trang chủ. Giúp app phản hồi nhanh và mượt mà hơn."
+  },
+  "17": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "17. Use for await...of to iterate over an array of Promises.",
+    "vn_title": "Duyệt mảng các Promise bằng vòng lặp bất đồng bộ for await...of",
+    "purpose": "Nắm vững tính năng Async Iteration (ES2018), cho phép xử lý từng phần tử trong một tập hợp Promise theo trình tự.",
+    "line_analysis": [
+      "Dòng 5: const promises = [simulateTask(300), simulateTask(600), simulateTask(900)]; - Khởi tạo mảng chứa 3 Promise với thời gian xử lý khác nhau.",
+      "Dòng 7-9: for await (const result of promises) { console.log(\"Kết quả từng Promise:\", result); } - Vòng lặp for await...of tự động await từng Promise trong mảng trước khi tiến sang vòng lặp kế tiếp."
+    ],
+    "execution_flow": "Vòng lặp lấy phần tử đầu tiên (300ms) và chờ hoàn thành để in ra kết quả. Tiếp theo lấy phần tử thứ hai (600ms), do các promise đã khởi chạy từ trước nên chỉ cần chờ nốt khoảng thời gian còn lại. Kết quả được in ra lần lượt từng phần tử một.",
+    "output_analysis": "Console in ra 3 dòng liên tiếp cách nhau một khoảng thời gian ngắn:\nKết quả từng Promise: Task done\nKết quả từng Promise: Task done\nKết quả từng Promise: Task done",
+    "mobile_application": "Duyệt qua luồng dữ liệu Streaming (Streaming Data) từ camera hoặc micro, hoặc đọc từng chunk dữ liệu khi tải tệp tin lớn về bộ nhớ máy nhằm tránh tràn RAM của thiết bị di động."
+  },
+  "18": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "18. Write an async function fetchUser(id) that simulates an API call (resolves a user object after 1 second).",
+    "vn_title": "Hàm async fetchUser(id) mô phỏng gọi API lấy đối tượng User",
+    "purpose": "Ứng dụng TypeScript Interface để mô hình hóa thực thể dữ liệu thực tế (User Entity) và mô phỏng giao tiếp Client-Server.",
+    "line_analysis": [
+      "Tại utils.ts: Định nghĩa Interface export interface User { id: number; name: string; } và hàm fetchUser(id: number): Promise<User> trả về đối tượng { id, name: `User ${id}` } sau 1000ms.",
+      "Dòng 1: import { fetchUser } from \"./utils\";",
+      "Dòng 4: const user = await fetchUser(1); - Chờ nhận đối tượng User từ hàm mô phỏng API.",
+      "Dòng 5: console.log(\"User:\", user); - In đối tượng người dùng ra terminal."
+    ],
+    "execution_flow": "Sau 1 giây giả lập thời gian trễ mạng, đối tượng { id: 1, name: 'User 1' } được tạo ra và resolve, biến user nhận giá trị và in ra màn hình.",
+    "output_analysis": "Sau 1 giây, console in ra: User: { id: 1, name: 'User 1' }.",
+    "mobile_application": "Tầng Service/Repository trong kiến trúc ứng dụng di động: Tương tác với cơ sở dữ liệu hoặc máy chủ để lấy thông tin hồ sơ người dùng (User Profile) và gán kiểu dữ liệu an toàn cho State trong React Native."
+  },
+  "19": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "19. Create an async function fetchUsers(ids: number[]) that calls fetchUser for each ID.",
+    "vn_title": "Hàm async fetchUsers(ids) lấy dữ liệu nhiều User đồng thời",
+    "purpose": "Kết hợp hàm bản đồ mảng Array.prototype.map() với Promise.all() để tải dữ liệu danh sách ID một cách tối ưu nhất.",
+    "line_analysis": [
+      "Dòng 4: async function fetchUsers(ids: number[]): Promise<User[]> - Nhận mảng các mã định danh ids, trả về mảng đối tượng User[].",
+      "Dòng 6: const users = await Promise.all(ids.map((id) => fetchUser(id))); - Dùng ids.map để chuyển đổi mỗi ID thành một Promise<User>, sau đó dùng Promise.all để kích hoạt toàn bộ request cùng lúc.",
+      "Dòng 11-12: Gọi fetchUsers([1, 2, 3]) và in danh sách kết quả ra console."
+    ],
+    "execution_flow": "Mảng [1, 2, 3] tạo ra 3 lời gọi fetchUser chạy song song. Sau đúng 1 giây (thay vì 3 giây nếu gọi tuần tự), cả 3 user được nạp xong và gom vào mảng users trả về.",
+    "output_analysis": "Sau 1 giây, console in ra: Danh sách users: [ { id: 1, name: 'User 1' }, { id: 2, name: 'User 2' }, { id: 3, name: 'User 3' } ].",
+    "mobile_application": "Tải thông tin chi tiết và avatar của danh sách bạn bè trong danh bạ hoặc danh sách những người thả tim/bình luận dưới bài viết trên mạng xã hội."
+  },
+  "20": {
+    "group": "B. LẬP TRÌNH BẤT ĐỒNG BỘ VỚI ASYNC / AWAIT (ASYNC/AWAIT)",
+    "pdf_req": "20. Add a timeout: if the API call takes more than 2 seconds, throw an error.",
+    "vn_title": "Kỹ thuật Timeout Pattern: ném lỗi nếu gọi API quá 2 giây",
+    "purpose": "Làm chủ mẫu thiết kế Timeout Pattern quan trọng nhất trong lập trình ứng dụng di động bằng cách kết hợp Promise.race.",
+    "line_analysis": [
+      "Dòng 4: function fetchWithTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> - Hàm generic nhận một Promise bất kỳ và thời gian giới hạn timeoutMs.",
+      "Dòng 5-9: Tạo timeoutPromise sẽ reject sau timeoutMs với Error(`Timeout sau ${timeoutMs}ms`).",
+      "Dòng 12: return Promise.race([promise, timeoutPromise]); - Cho tác vụ chính đua với bộ đếm timeout.",
+      "Dòng 17-19: Gọi slowApiCall (mất 3000ms) thông qua fetchWithTimeout với giới hạn 2000ms."
+    ],
+    "execution_flow": "Bộ đếm timeout 2000ms hoàn thành trước tác vụ API 3000ms. Promise.race lập tức reject với lỗi timeout, luồng nhảy vào khối catch và in thông báo lỗi.",
+    "output_analysis": "Sau đúng 2 giây, console in ra: 'Lỗi: Timeout sau 2000ms'.",
+    "mobile_application": "Mẫu thiết kế sống còn trong ứng dụng di động: Ngăn chặn tình trạng ứng dụng bị treo vô tận (Infinite Loading Spinner) khi người dùng đi vào vùng sóng yếu hoặc máy chủ bị quá tải."
+  }
+}

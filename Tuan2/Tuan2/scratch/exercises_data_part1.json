@@ -1,0 +1,144 @@
+{
+  "1": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "1. Create a Promise that returns the string \"Hello Async\" after 2 seconds.",
+    "vn_title": "Tạo Promise trả về chuỗi \"Hello Async\" sau 2 giây",
+    "purpose": "Làm quen với cú pháp khởi tạo một Promise thuần túy bằng constructor, cơ chế trì hoãn thời gian với setTimeout và cách lắng nghe kết quả thành công bằng phương thức .then().",
+    "line_analysis": [
+      "Dòng 2: function bai1(): Promise<string> - Khai báo hàm bai1 không nhận đối số, định kiểu trả về Promise<string>, biểu thị kết quả khi hoàn thành sẽ là một giá trị chuỗi (string).",
+      "Dòng 3: return new Promise((resolve) => { ... }) - Khởi tạo đối tượng Promise. Hàm executor nhận hàm resolve làm tham số đại diện cho trạng thái hoàn thành thành công.",
+      "Dòng 4-6: setTimeout(() => { resolve(\"Hello Async\"); }, 2000); - Gọi hàm setTimeout của môi trường runtime (Node.js/Web APIs) để tạo độ trễ 2000ms. Sau 2 giây, resolve(\"Hello Async\") được gọi, chuyển trạng thái Promise từ 'pending' sang 'fulfilled'.",
+      "Dòng 11-13: bai1().then((result) => { console.log(result); }); - Gọi hàm bai1() và sử dụng phương thức .then() để đăng ký callback xử lý kết quả khi Promise thành công, in chuỗi 'Hello Async' ra màn hình console."
+    ],
+    "execution_flow": "Khi hàm bai1() được thực thi, đối tượng Promise được cấp phát trên Heap và bộ đếm thời gian 2000ms được chuyển giao cho subsystem C++ (Libuv) quản lý. Hàm bai1() trả về ngay lập tức Promise ở trạng thái Pending, giải phóng Call Stack để Node.js tiếp tục xử lý các công việc khác. Sau 2 giây, timer hoàn tất, hàm callback chứa resolve() được đẩy vào Macrotask Queue (Timer phase). Event Loop lấy callback này đưa vào Call Stack thực thi, đánh dấu Promise thành Fulfilled. Ngay lập tức, callback trong .then() được đưa vào Microtask Queue và được chạy để in kết quả ra terminal.",
+    "output_analysis": "Sau 2 giây kể từ khi chạy lệnh, dòng chữ 'Hello Async' được in ra màn hình. Thời gian thực thi đo được khoảng 2.2 giây. Mã thoát 0 (thành công).",
+    "mobile_application": "Ứng dụng trong việc tạo màn hình chào (Splash Screen delay) giữ logo thương hiệu trong 2 giây trước khi điều hướng vào trang chính, hoặc tạo độ trễ giả lập để kiểm tra hiệu ứng Skeleton Loading khi chưa có API thật."
+  },
+  "2": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "2. Write a function that returns a Promise resolving with the number 10 after 1 second.",
+    "vn_title": "Hàm trả về Promise giải quyết giá trị số 10 sau 1 giây",
+    "purpose": "Đóng gói xử lý bất đồng bộ vào một hàm độc lập có khả năng tái sử dụng (reusable function), định kiểu số (number) chặt chẽ trong TypeScript.",
+    "line_analysis": [
+      "Dòng 2: function bai2(): Promise<number> - Khai báo hàm bai2 trả về kiểu Promise<number>, đảm bảo trình biên dịch TypeScript sẽ kiểm tra tính toàn vẹn kiểu dữ liệu của giá trị resolve.",
+      "Dòng 3-7: return new Promise((resolve) => { setTimeout(() => { resolve(10); }, 1000); }); - Khởi tạo Promise, sau 1000ms thực hiện resolve giá trị số nguyên 10.",
+      "Dòng 10-12: bai2().then((result) => { console.log(result); }); - Nhận giá trị số 10 qua tham số result và xuất ra terminal."
+    ],
+    "execution_flow": "Tương tự Bài 1, tiến trình tạo bộ đếm 1000ms tại background thread. Sau 1 giây, callback timer được kích hoạt, resolve(10) chuyển trạng thái Promise thành Fulfilled và đẩy hàm xử lý trong .then() vào Microtask Queue để in ra số 10.",
+    "output_analysis": "Console hiển thị số 10 sau đúng 1 giây chờ đợi. Thời gian thực thi thực tế đạt xấp xỉ 1.15s.",
+    "mobile_application": "Thường được dùng trong các dịch vụ đọc bộ nhớ tạm (Cache / AsyncStorage) của ứng dụng Mobile, ví dụ: truy vấn số lượng thông báo chưa đọc (badge count) hoặc số điểm tích lũy của người dùng và trả về dưới dạng Promise<number>."
+  },
+  "3": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "3. Write a function that rejects a Promise with the error \"Something went wrong\" after 1 second.",
+    "vn_title": "Hàm từ chối (reject) Promise với thông báo lỗi sau 1 giây",
+    "purpose": "Nắm vững trạng thái thất bại (Rejected) của Promise, cách khởi tạo đối tượng chuẩn Error và kỹ thuật đón bắt ngoại lệ bằng phương thức .catch().",
+    "line_analysis": [
+      "Dòng 1: function bai3(): Promise<never> - Khai báo kiểu trả về Promise<never> chỉ ra rằng Promise này sẽ luôn luôn thất bại và không bao giờ trả về giá trị hợp lệ.",
+      "Dòng 2: return new Promise((_, reject) => { ... }) - Sử dụng ký tự gạch dưới '_' để biểu thị tham số resolve không được sử dụng, chỉ nhận tham số reject.",
+      "Dòng 3-5: setTimeout(() => { reject(new Error(\"Something went wrong\")); }, 1000); - Sau 1000ms, gọi hàm reject với đối tượng new Error(\"Something went wrong\"). Việc bọc thông điệp trong đối tượng Error chuẩn giúp thu thập đầy đủ Call Stack Trace phục vụ công tác Debug.",
+      "Dòng 9-11: bai3().catch((error) => { console.log(\"Lỗi:\", error.message); }); - Bắt lỗi thông qua phương thức .catch(), trích xuất thuộc tính message và in thông báo lỗi ra màn hình."
+    ],
+    "execution_flow": "Hàm bai3() trả về một Promise đang Pending. Sau 1000ms, timer nổ, hàm reject được gọi khiến trạng thái Promise chuyển sang Rejected. JavaScript Engine không tìm thấy .then() xử lý lỗi nên lập tức kích hoạt callback đăng ký trong .catch() từ Microtask Queue. Nhờ có .catch(), lỗi được kiểm soát an toàn và không gây sập tiến trình hệ điều hành.",
+    "output_analysis": "Sau 1 giây, màn hình console in ra: 'Lỗi: Something went wrong'. Mã thoát trả về 0 chứng minh lỗi đã được bắt và xử lý thành công.",
+    "mobile_application": "Cực kỳ quan trọng trong lập trình React Native để xử lý các kịch bản mạng thất bại (mất sóng, lỗi máy chủ 500, xác thực không thành công). Bắt lỗi bằng .catch() giúp hiển thị hộp thoại Alert hoặc Toast cảnh báo người dùng thay vì làm ứng dụng bị văng (crash)."
+  },
+  "4": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "4. Use .then() and .catch() to handle a Promise that returns a random number.",
+    "vn_title": "Xử lý Promise trả về số ngẫu nhiên kết hợp đồng thời .then() và .catch()",
+    "purpose": "Rèn luyện kỹ thuật phân nhánh logic thành công hoặc thất bại dựa trên điều kiện nghiệp vụ (Business Validation) và kết hợp chuỗi phương thức .then().catch().",
+    "line_analysis": [
+      "Dòng 1: function getRandomNumber(): Promise<number> - Khai báo hàm sinh số ngẫu nhiên bất đồng bộ.",
+      "Dòng 2-10: Sinh số ngẫu nhiên num = Math.random() trong nửa khoảng [0, 1). Nếu num < 0.1 (xác suất 10%), gọi reject(new Error(\"Số quá nhỏ, thử lại\")). Nếu num >= 0.1 (xác suất 90%), gọi resolve(num).",
+      "Dòng 14-20: getRandomNumber().then(num => console.log(\"Số ngẫu nhiên:\", num)).catch(err => console.error(\"Lỗi:\", err.message)) - Thiết lập pipeline xử lý 2 nhánh: nhánh thành công đi vào .then(), nhánh lỗi đi vào .catch()."
+    ],
+    "execution_flow": "Đoạn mã kiểm tra điều kiện ngay khi Promise khởi tạo. Nếu số sinh ra thỏa mãn (>= 0.1), trạng thái thành Fulfilled và callback của .then() được gọi. Nếu số < 0.1, trạng thái thành Rejected và callback của .catch() được gọi. Hai nhánh loại trừ lẫn nhau (mutually exclusive).",
+    "output_analysis": "Kết quả thực tế sinh ra số ngẫu nhiên hợp lệ (ví dụ: 0.8267...), console in ra: 'Số ngẫu nhiên: 0.8267677519969194' và nhánh .catch() hoàn toàn bị bỏ qua.",
+    "mobile_application": "Mô phỏng logic kiểm tra tính hợp lệ dữ liệu (Validation) trước khi thực hiện giao dịch thanh toán trên ứng dụng di động: nếu số dư không đủ hoặc thông tin thẻ sai, reject Promise để hiển thị cảnh báo; ngược lại resolve để tiến hành thanh toán."
+  },
+  "5": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "5. Create a function simulateTask(time) that returns a Promise resolving with \"Task done\" after time ms.",
+    "vn_title": "Xây dựng hàm tiện ích simulateTask(time) mô phỏng tác vụ có độ trễ linh hoạt",
+    "purpose": "Tạo hàm tiện ích cốt lõi (Core Utility Helper) nhận tham số thời gian biến thiên, làm nền tảng mô phỏng các tác vụ mạng/I/O phức tạp trong toàn bộ dự án thực hành.",
+    "line_analysis": [
+      "Dòng 1: export function simulateTask(time: number): Promise<string> - Xuất hàm tiện ích nhận tham số time (mili-giây), trả về Promise chứa chuỗi thông báo kết quả.",
+      "Dòng 2-6: return new Promise((resolve) => { setTimeout(() => { resolve(\"Task done\"); }, time); }); - Bọc hàm setTimeout với biến thời gian động time, resolve chuỗi 'Task done'.",
+      "Tại Bai5.ts: Import hàm simulateTask từ utils.ts, gọi simulateTask(1000) và in kết quả với .then()."
+    ],
+    "execution_flow": "Hàm simulateTask đăng ký bộ đếm thời gian động dựa trên tham số truyền vào. Sau 1000ms, resolve() được kích hoạt, đưa callback .then() vào Microtask Queue và in chuỗi 'Task done'.",
+    "output_analysis": "Sau 1 giây, console in ra: 'Task done'. Quá trình chạy mượt mà không có cảnh báo hay lỗi cú pháp.",
+    "mobile_application": "Làm Mock Service cực kỳ hiệu quả trong giai đoạn đầu phát triển ứng dụng di động (khi đội ngũ Backend chưa hoàn thiện API). Lập trình viên Mobile có thể dùng simulateTask để kiểm thử luồng hiển thị loading và chuyển trang."
+  },
+  "6": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "6. Use Promise.all() to run 3 simulated Promises in parallel and print the result.",
+    "vn_title": "Thực thi song song 3 Promise mô phỏng bằng Promise.all()",
+    "purpose": "Làm chủ cơ chế đồng thời (Parallel Concurrency) với Promise.all(), hiểu rõ cách tối ưu hóa thời gian chờ khi xử lý nhiều tác vụ bất đồng bộ độc lập.",
+    "line_analysis": [
+      "Dòng 6-8: Khởi tạo 3 Promise riêng biệt: p1 (1000ms), p2 (2000ms), p3 (1500ms). Cả 3 timer đều được kích hoạt chạy song song ngay tại thời điểm này.",
+      "Dòng 11-13: Promise.all([p1, p2, p3]).then((results) => { console.log(\"Kết quả Promise.all:\", results); }); - Đưa cả 3 Promise vào Promise.all(). Khi tất cả cùng hoàn thành, trả về mảng kết quả results theo đúng thứ tự ban đầu."
+    ],
+    "execution_flow": "Ba bộ đếm thời gian chạy đồng thời trong background thread pool. Tại thời điểm 1000ms, p1 xong; tại 1500ms, p3 xong; tại 2000ms, p2 xong. Promise.all xác nhận tất cả đã hoàn tất và kích hoạt callback .then() với mảng ['Task done', 'Task done', 'Task done']. Tổng thời gian hoàn tất chỉ bằng tác vụ lâu nhất là 2000ms, thay vì 4500ms nếu chạy tuần tự.",
+    "output_analysis": "Sau 2 giây, console in ra: Kết quả Promise.all: [ 'Task done', 'Task done', 'Task done' ]. Tiết kiệm hơn 55% thời gian so với chạy tuần tự.",
+    "mobile_application": "Ứng dụng kinh điển khi khởi động ứng dụng React Native: Gọi đồng thời 3 API: (1) Tải danh sách Banner quảng cáo, (2) Tải danh mục sản phẩm nổi bật, (3) Tải thông tin tài khoản người dùng, giúp màn hình chính hiển thị nội dung nhanh nhất."
+  },
+  "7": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "7. Use Promise.race() to return whichever Promise resolves first.",
+    "vn_title": "Sử dụng Promise.race() để lấy kết quả của Promise hoàn thành sớm nhất",
+    "purpose": "Nắm vững cơ chế cuộc đua (Race Condition Pattern) giữa các tác vụ bất đồng bộ, hiểu rõ cách thức hoạt động và trường hợp ứng dụng của Promise.race().",
+    "line_analysis": [
+      "Dòng 4-6: Khởi tạo 3 tác vụ với độ trễ khác nhau: p1 (3000ms), p2 (1000ms), p3 (2000ms).",
+      "Dòng 9-11: Promise.race([p1, p2, p3]).then((result) => { console.log(\"Kết quả Promise.race (nhanh nhất):\", result); }); - Đưa 3 tác vụ vào cuộc đua. Tác vụ nào resolve hoặc reject đầu tiên sẽ quyết định kết quả của Promise.race."
+    ],
+    "execution_flow": "Sau 1000ms, p2 hoàn thành trước tiên. Promise.race lập tức chuyển sang trạng thái Fulfilled với kết quả của p2 và gọi hàm xử lý trong .then(). Lưu ý kỹ thuật: Mặc dù cuộc đua đã kết thúc, hai tác vụ p1 và p3 vẫn tiếp tục chạy ngầm trong bộ nhớ cho đến khi hết thời gian của chúng (trừ khi sử dụng AbortController để hủy bỏ).",
+    "output_analysis": "Sau 1 giây, console in ra: 'Kết quả Promise.race (nhanh nhất): Task done'. Kết quả chính xác thuộc về tác vụ p2 (1000ms).",
+    "mobile_application": "Áp dụng trong kỹ thuật chọn cụm máy chủ nhanh nhất (Fastest Mirror Selection): Ứng dụng gửi đồng thời request tới 3 máy chủ phụ trợ (Singapore, Tokyo, Hong Kong), server nào phản hồi sớm nhất sẽ được dùng làm máy chủ chính cho phiên làm việc."
+  },
+  "8": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "8. Create a Promise chain: square the number 2, then double it, then add 5.",
+    "vn_title": "Xây dựng chuỗi Promise (Promise Chaining) biến đổi dữ liệu tuần tự",
+    "purpose": "Thấu hiểu nguyên lý truyền dữ liệu qua chuỗi Promise, cơ chế tự động bọc giá trị trả về thành Promise mới để tạo thành pipeline xử lý dữ liệu phẳng và mạch lạc.",
+    "line_analysis": [
+      "Dòng 1: Promise.resolve(2) - Khởi tạo một Promise đã fulfilled ngay lập tức với giá trị ban đầu là số 2.",
+      "Dòng 2: .then((num) => num * num) - Nhận số 2, tính bình phương: 2 * 2 = 4. Giá trị 4 được trả về và tự động bọc thành Promise.resolve(4).",
+      "Dòng 3: .then((num) => num * 2) - Nhận 4 từ bước trước, nhân đôi: 4 * 2 = 8.",
+      "Dòng 4: .then((num) => num + 5) - Nhận 8 từ bước trước, cộng 5: 8 + 5 = 13.",
+      "Dòng 5-7: .then((result) => { console.log(\"Kết quả chuỗi Promise:\", result); }); - Nhận kết quả cuối cùng là 13 và in ra màn hình."
+    ],
+    "execution_flow": "Dữ liệu được xử lý tuần tự qua các Microtask: 2 -> 4 -> 8 -> 13. Mỗi phương thức .then() trả về một Promise mới. Mô hình chuỗi này loại bỏ hoàn toàn hiện tượng Callback Hell (các hàm lồng nhau dạng tam giác), giữ mã nguồn phẳng và dễ kiểm thử.",
+    "output_analysis": "Console in ra kết quả tính toán chính xác: 'Kết quả chuỗi Promise: 13'. Thời gian thực thi gần như tức thời (~0.14s).",
+    "mobile_application": "Xây dựng đường ống biến đổi dữ liệu (Data Pipeline) trong ứng dụng di động: Lấy chuỗi JSON thô từ Server -> Parse thành Object -> Chuẩn hóa định dạng tiền tệ và ngày tháng -> Cập nhật vào Redux/Zustand Store."
+  },
+  "9": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "9. Write a Promise that reads an array after 1 second and filters even numbers.",
+    "vn_title": "Đọc mảng dữ liệu sau 1 giây và lọc các số chẵn",
+    "purpose": "Kết hợp xử lý bất đồng bộ (trì hoãn thời gian) với các hàm xử lý mảng hàm bậc cao (Higher-order Array Methods) trong TypeScript.",
+    "line_analysis": [
+      "Dòng 2: function bai9(): Promise<number[]> - Khai báo hàm trả về kiểu Promise chứa mảng số nguyên number[].",
+      "Dòng 3-10: Trong callback của setTimeout (1000ms), khởi tạo mảng arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]. Dùng hàm arr.filter((n) => n % 2 === 0) để giữ lại các số chia hết cho 2 (số chẵn), sau đó resolve mảng kết quả.",
+      "Dòng 13-15: Gọi bai9().then(result => console.log(\"Các số chẵn:\", result)) để nhận và in mảng số chẵn."
+    ],
+    "execution_flow": "Sau 1 giây trì hoãn mô phỏng thời gian đọc dữ liệu, phép lọc mảng được thực thi đồng bộ trên Call Stack, kết quả mảng [2, 4, 6, 8, 10] được chuyển giao cho callback của .then() trong Microtask Queue.",
+    "output_analysis": "Sau 1 giây, console in ra: 'Các số chẵn: [ 2, 4, 6, 8, 10 ]'.",
+    "mobile_application": "Truy vấn danh sách đơn hàng từ SQLite nội bộ của điện thoại, sau đó áp dụng bộ lọc lấy các đơn hàng có trạng thái 'Đã giao thành công' để hiển thị lên giao diện lịch sử mua sắm."
+  },
+  "10": {
+    "group": "A. CƠ BẢN VỀ PROMISE (BASICS WITH PROMISE)",
+    "pdf_req": "10. Use .finally() to log \"Done\" when a Promise finishes (success or failure).",
+    "vn_title": "Quản lý dọn dẹp và kết thúc với phương thức .finally()",
+    "purpose": "Nắm vững vai trò của .finally(), đảm bảo các đoạn mã dọn dẹp tài nguyên luôn luôn được gọi dù Promise thành công hay gặp lỗi.",
+    "line_analysis": [
+      "Dòng 2-12: function bai10(shouldFail: boolean): Promise<string> - Hàm nhận cờ shouldFail: nếu true thì reject, nếu false thì resolve sau 1000ms.",
+      "Dòng 14-17: Gọi bai10(false).then(...).catch(...).finally(() => console.log(\"Done\")) - Cấu hình chuỗi đầy đủ gồm cả 3 phương thức.",
+      "Callback trong .finally() không nhận bất kỳ đối số nào và luôn luôn chạy ở bước cuối cùng sau khi .then() hoặc .catch() hoàn tất."
+    ],
+    "execution_flow": "Khi bai10(false) hoàn thành, .then() được gọi trước để in kết quả thành công. Ngay sau đó, callback của .finally() được kích hoạt để in chữ 'Done'. Nếu truyền true, .catch() chạy trước rồi .finally() vẫn chạy như thường lệ.",
+    "output_analysis": "Console in ra 2 dòng liên tiếp:\nThành công: Task succeeded\nDone",
+    "mobile_application": "Vị trí chuẩn mực trong React Native để tắt biểu tượng xoay tải trang: setLoading(false) hoặc ẩn ActivityIndicator, đóng kết nối WebSocket hoặc giải phóng bộ nhớ camera sau khi chụp ảnh."
+  }
+}
